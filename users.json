@@ -1,0 +1,13 @@
+[
+    {
+      "email": "seu@email.com",
+      "password": "senha_hash",
+      "role": "admin"
+    },
+    {
+      "email": "usuario@comum.com",
+      "password": "senha_hash",
+      "role": "user"
+    }
+  ]
+  

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>DivTransfer</title>
+</head>
+<body>
+  <h1>Enviar arquivo</h1>
+  <input type="file" id="fileInput" />
+  <button onclick="uploadFile()">Enviar</button>
+  <p id="link"></p>
+
+  <script>
+    function uploadFile() {
+      const fileInput = document.getElementById('fileInput');
+      const file = fileInput.files[0];
+
+      if (!file) {
+        alert('Por favor, selecione um arquivo.');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      fetch('http://localhost:5000/upload', {
+        method: 'POST',
+        body: formData
+      })
+        .then(res => res.json())
+        .then(data => {
+          const downloadLink = document.createElement('a');
+          downloadLink.href = data.link; // agora é /download/arquivo.ext
+          downloadLink.setAttribute('download', '');
+          downloadLink.textContent = 'Clique aqui para fazer o download';
+          document.getElementById('link').innerHTML = '';
+          document.getElementById('link').appendChild(downloadLink);
+        })
+        .catch(err => {
+          console.error('Erro ao enviar o arquivo:', err);
+          alert('Erro ao enviar o arquivo.');
+        });
+    }
+  </script>
+</body>
+</html>
